@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>The Story of 30 Friends — Zainul Arkaan Al Insi</title>
+<meta name="description" content="Kisah nyata 30 sahabat menjelajah 20 negara dalam satu tahun. Sebuah catatan perjalanan backpacker dari Bogor ke tiga benua — ditulis oleh Zainul Arkaan Al Insi." />
+<meta name="theme-color" content="#14110d" />
+<meta property="og:type" content="book" />
+<meta property="og:title" content="The Story of 30 Friends — Exploring 20 Countries in One Year" />
+<meta property="og:description" content="Kisah nyata 30 sahabat menjelajah 20 negara dalam satu tahun." />
+<meta property="og:image" content="/assets/img/cover.webp" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2314110d'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Georgia,serif' fill='%23b4552a' text-anchor='middle'%3E30%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="preload" as="image" href="/assets/img/cover.webp" />
+<link rel="stylesheet" href="/assets/css/style.css" />
+<link rel="stylesheet" href="/assets/css/sketchbook.css" />
+</head>
+<body>
+
+<!-- ══════════ GRAIN + VIGNETTE ══════════ -->
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ══════════ LOADER ══════════ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__inner">
+    <div class="loader__stamp">
+      <span class="loader__stamp-top">BOARDING</span>
+      <span class="loader__stamp-mid">30</span>
+      <span class="loader__stamp-bot">FRIENDS</span>
+    </div>
+    <div class="loader__bar"><i id="loaderBar"></i></div>
+    <div class="loader__meta"><span>CGK</span><span id="loaderPct">00%</span><span>HKG</span></div>
+  </div>
+</div>
+
+<!-- ══════════ NAV ══════════ -->
+<header class="nav" id="nav">
+  <a href="#top" class="nav__brand">
+    <span class="nav__mark">30</span>
+    <span class="nav__brand-txt"><b>The Story of 30 Friends</b><i>Zainul Arkaan Al Insi</i></span>
+  </a>
+  <nav class="nav__links" id="navLinks">
+    <a href="#buku-flip">Buku</a>
+    <a href="#rute">Rute</a>
+    <a href="#negara">Negara</a>
+    <a href="#galeri">Galeri</a>
+    <a href="#catatan">Catatan</a>
+    <a href="#buku" class="nav__cta">Dapatkan Buku</a>
+  </nav>
+  <button class="nav__burger" id="burger" aria-label="Buka menu" aria-expanded="false"><i></i><i></i><i></i></button>
+</header>
+
+<main id="top">
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__glow"></div>
+    <img src="/assets/img/cover-blur.webp" alt="" class="hero__wash" />
+  </div>
+
+  <div class="hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow reveal" data-d="0">
+        <span class="eyebrow__line"></span>Catatan Perjalanan · 2026
+      </p>
+
+      <h1 class="hero__title">
+        <span class="w" style="--i:0">The</span>
+        <span class="w" style="--i:1">Story</span>
+        <span class="w" style="--i:2">of</span>
+        <span class="w hero__num" style="--i:3">30</span>
+        <span class="w" style="--i:4">Friends</span>
+      </h1>
+
+      <p class="hero__sub reveal" data-d="200">
+        Menjelajah <b>20 negara</b> dalam <b>satu tahun</b>. Tiga benua, ratusan stasiun,
+        dan tiga puluh orang yang berangkat sebagai orang asing lalu pulang sebagai keluarga.
+      </p>
+
+      <div class="hero__actions reveal" data-d="320">
+        <a href="#buku" class="btn btn--solid" data-magnet>
+          <span>Dapatkan Bukunya</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#prolog" class="btn btn--ghost" data-magnet>Baca Cuplikannya</a>
+      </div>
+
+      <dl class="hero__facts reveal" data-d="440">
+        <div><dt>20</dt><dd>Negara</dd></div>
+        <div><dt>30</dt><dd>Sahabat</dd></div>
+        <div><dt>3</dt><dd>Benua</dd></div>
+        <div><dt>346</dt><dd>Halaman</dd></div>
+      </dl>
+    </div>
+
+    <div class="hero__book reveal" data-d="140">
+      <div class="book" id="book">
+        <div class="book__shadow"></div>
+        <div class="book__body">
+          <div class="book__edge"></div>
+          <img src="/assets/img/cover.webp" alt="Sampul buku The Story of 30 Friends karya Zainul Arkaan Al Insi" class="book__face" width="900" height="1350" />
+          <div class="book__gloss"></div>
+        </div>
+        <div class="stamp stamp--a">DEPARTED<br /><b>23.06.2023</b></div>
+        <div class="stamp stamp--b">20<br /><b>COUNTRIES</b></div>
+      </div>
+    </div>
+  </div>
+
+  <a href="#ticker" class="hero__scroll" aria-label="Gulir ke bawah"><i></i><span>gulir</span></a>
+</section>
+
+<!-- ══════════ TICKER ══════════ -->
+<section class="ticker" id="ticker" aria-hidden="true">
+  <div class="ticker__row" id="tickerRow"></div>
+</section>
+
+
+<!-- ══════════ SKETCHBOOK ══════════ -->
+<section class="sbsec" id="buku-flip">
+  <div class="wrap">
+    <header class="sec-head sec-head--mid">
+      <p class="section-label reveal">Buka Bukunya</p>
+      <h2 class="sec-head__h reveal" data-d="80">Balik halamannya<br /><em>seperti kertas sungguhan.</em></h2>
+      <p class="sec-head__p reveal" data-d="160">Seret halaman untuk membaliknya. Seret kaca pembesarnya
+      ke mana saja. Panah kiri/kanan juga jalan.</p>
+    </header>
+  </div>
+
+  <div class="sb-wrap" id="sbWrap">
+    <div class="sb-stage" id="sbStage">
+      <button class="sb-arrow left" id="sbLeft" type="button" aria-label="halaman sebelumnya">
+        <svg viewBox="0 0 14 44" width="14" height="44" fill="none" aria-hidden="true"><polyline points="11,3 3,22 11,41" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="sb-3d" id="sb3d">
+        <div class="sb-tilt" id="sbTilt">
+          <div class="sb-cast ambient" aria-hidden="true"></div>
+          <div class="sb-cast contact" aria-hidden="true"></div>
+          <div class="sb-cast hair" aria-hidden="true"></div>
+          <div class="sb-book" id="sbBook"></div>
+        </div>
+        <div class="zoomwrap" id="zoomWrap" aria-hidden="true"><div class="zoominner" id="zoomInner"></div></div>
+        <div class="loupe" id="loupe"><span class="grip"></span><span class="ring"><span class="lens"></span></span></div>
+      </div>
+      <button class="sb-arrow right" id="sbRight" type="button" aria-label="halaman berikutnya">
+        <svg viewBox="0 0 14 44" width="14" height="44" fill="none" aria-hidden="true"><polyline points="3,3 11,22 3,41" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <div class="sb-captions" id="sbCaptions"></div>
+
+    <div class="sb-tools" role="group" aria-label="kendali tampilan">
+      <button class="tool" id="zOut" type="button" aria-label="perkecil"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8.6" cy="8.6" r="5.6"/><path d="M12.8 12.8 17.4 17.4M6.2 8.6h4.8"/></svg></button>
+      <span class="zoom-read" id="zRead">100%</span>
+      <button class="tool" id="zIn" type="button" aria-label="perbesar"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8.6" cy="8.6" r="5.6"/><path d="M12.8 12.8 17.4 17.4M6.2 8.6h4.8M8.6 6.2v4.8"/></svg></button>
+      <span class="tool-sep" aria-hidden="true"></span>
+      <button class="tool" id="loupeBtn" type="button" aria-label="kaca pembesar" aria-pressed="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8.8" cy="8.8" r="5.8"/><path d="M13 13l4.4 4.4"/><path d="M6.4 7.2a3.2 3.2 0 0 1 2.4-1.4" opacity=".55"/></svg></button>
+    </div>
+
+    <p class="sb-hint" id="sbHint">Seret halaman untuk membalik · Seret kacanya ke atas kertas</p>
+  </div>
+
+  <div class="wrap">
+    <p class="section-label sb-idx-label">Daftar Etape</p>
+    <ol class="sb-index" id="sbIndex"></ol>
+  </div>
+</section>
+
+<!-- ══════════ PROLOG ══════════ -->
+<section class="prolog" id="prolog">
+  <div class="wrap">
+    <p class="section-label reveal">Prolog · Malam Sebelum Dunia</p>
+    <blockquote class="prolog__quote">
+      <p class="reveal" data-d="0">“Aku ingat sebuah pikiran yang aneh: bahwa orang yang akan melangkah
+      kembali melalui pintu ini setahun lagi <em>bukanlah orang yang sama</em> dengan yang meninggalkannya.”</p>
+      <footer class="reveal" data-d="200">
+        <span class="rule"></span>
+        Prolog, halaman 7
+      </footer>
+    </blockquote>
+
+    <div class="prolog__cols">
+      <p class="reveal" data-d="80">Hampir tengah malam di Bogor, dan aku tidak bisa tidur. Ransel itu duduk di dekat pintu
+      seperti hewan yang sabar — sudah terkunci, sudah lebih berat dari yang kuinginkan.</p>
+      <p class="reveal" data-d="160">Besok, tiga puluh dari kami akan bertemu di bandara. Sebagian sudah kukenal bertahun-tahun.
+      Sebagian baru kutemui dua kali. Saat kami pulang, kami akan hafal suara dengkuran satu sama lain.</p>
+      <p class="reveal" data-d="240">Dua puluh negara. Tiga benua. Satu tahun. Di atas kertas itu sebuah rencana.
+      Di dadaku, rasanya seperti berdiri di tepi kolam dalam gelap.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ANGKA ══════════ -->
+<section class="stats">
+  <div class="wrap stats__grid">
+    <div class="stat reveal" data-d="0"><span class="stat__n" data-count="20">0</span><span class="stat__l">Negara disinggahi</span></div>
+    <div class="stat reveal" data-d="90"><span class="stat__n" data-count="30">0</span><span class="stat__l">Sahabat seperjalanan</span></div>
+    <div class="stat reveal" data-d="180"><span class="stat__n" data-count="74">0</span><span class="stat__l">Bab perjalanan</span></div>
+    <div class="stat reveal" data-d="270"><span class="stat__n" data-count="346">0</span><span class="stat__l">Halaman kisah</span></div>
+  </div>
+</section>
+
+<!-- ══════════ RUTE ══════════ -->
+<section class="route" id="rute">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="section-label reveal">Rute</p>
+      <h2 class="sec-head__h reveal" data-d="80">Dari Soekarno&#8209;Hatta,<br /><em>ke ujung dunia, dan pulang.</em></h2>
+      <p class="sec-head__p reveal" data-d="160">Sebelas etape besar. Ditempuh dengan pesawat murah, bus malam,
+      kereta tidur, feri, dan kaki sendiri.</p>
+    </header>
+  </div>
+  <div class="route__scroller" id="routeScroller">
+    <div class="route__track" id="routeTrack"></div>
+  </div>
+  <div class="route__hint"><span>geser untuk menyusuri rute</span></div>
+</section>
+
+<!-- ══════════ NEGARA ══════════ -->
+<section class="plates" id="negara">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="section-label reveal">Sebelas Etape</p>
+      <h2 class="sec-head__h reveal" data-d="80">Setiap negara<br /><em>meninggalkan sesuatu.</em></h2>
+      <p class="sec-head__p reveal" data-d="160">Ketuk salah satu kartu untuk membuka catatan lengkap, angka, dan foto aslinya.</p>
+    </header>
+    <div class="plates__grid" id="platesGrid"></div>
+  </div>
+</section>
+
+<!-- ══════════ GALERI ══════════ -->
+<section class="gallery" id="galeri">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="section-label reveal">Galeri</p>
+      <h2 class="sec-head__h reveal" data-d="80">Foto asli<br /><em>dari dalam buku.</em></h2>
+    </header>
+    <div class="gallery__filters" id="galFilters"></div>
+    <div class="gallery__grid" id="galGrid"></div>
+  </div>
+</section>
+
+<!-- ══════════ 30 SAHABAT ══════════ -->
+<section class="friends">
+  <div class="wrap friends__inner">
+    <div class="friends__media">
+      <figure class="polaroid polaroid--tilt-a reveal" data-d="0"><img loading="lazy" src="/assets/img/group-0.webp" alt="Tiga puluh sahabat berfoto bersama bendera Indonesia" /></figure>
+      <figure class="polaroid polaroid--tilt-b reveal" data-d="140"><img loading="lazy" src="/assets/img/group-1.webp" alt="Makan bersama di perjalanan" /></figure>
+      <figure class="polaroid polaroid--tilt-c reveal" data-d="260"><img loading="lazy" src="/assets/img/group-2.webp" alt="Foto rombongan di halaman masjid Al-Azhar" /></figure>
+    </div>
+    <div class="friends__copy">
+      <p class="section-label reveal">Bab Tematik 01</p>
+      <h2 class="friends__h reveal" data-d="80">30 sahabat yang<br /><em>tak akan kulupakan.</em></h2>
+      <p class="reveal" data-d="160">“Saat aku menoleh ke belakang pada tahun itu, yang pertama kulihat bukan negara.
+      Bukan bandara, bukan bus, bukan peta. Yang kulihat adalah wajah. Tiga puluh wajah.”</p>
+      <p class="reveal" data-d="240">Tanpa mereka, buku ini hanya akan jadi daftar tempat.
+      Bersama mereka, ia menjadi sebuah cerita.</p>
+      <a href="#buku" class="btn btn--ghost reveal" data-d="320" data-magnet>Kenali mereka di dalam buku</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CATATAN ══════════ -->
+<section class="notes" id="catatan">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="section-label reveal">Bab Tematik 06</p>
+      <h2 class="sec-head__h reveal" data-d="80">Catatan dari jalan.</h2>
+      <p class="sec-head__p reveal" data-d="160">Bab yang paling praktis di buku ini — hal-hal kecil yang dipelajari
+      dengan cara melakukannya, dan salah lebih dulu.</p>
+    </header>
+    <div class="notes__list" id="notesList"></div>
+  </div>
+</section>
+
+<!-- ══════════ BUKU / CTA ══════════ -->
+<section class="buy" id="buku">
+  <div class="wrap buy__inner">
+    <div class="buy__media">
+      <div class="book book--sm" id="book2">
+        <div class="book__shadow"></div>
+        <div class="book__body">
+          <div class="book__edge"></div>
+          <img loading="lazy" src="/assets/img/cover.webp" alt="Sampul buku The Story of 30 Friends" class="book__face" />
+          <div class="book__gloss"></div>
+        </div>
+      </div>
+    </div>
+    <div class="buy__copy">
+      <p class="section-label reveal">Dapatkan Bukunya</p>
+      <h2 class="buy__h reveal" data-d="80">The Story of<br />30 Friends</h2>
+      <p class="buy__meta reveal" data-d="140">Zainul Arkaan Al Insi · 2026 · 346 halaman · Bahasa Inggris</p>
+      <p class="reveal" data-d="200">Ini bukan panduan wisata. Bukan daftar “10 Tempat Terbaik”. Ini kisah nyata tentang
+      tiga puluh anak muda yang meninggalkan semuanya selama setahun — dengan ransel, mimpi,
+      dan satu sama lain.</p>
+      <ul class="buy__list reveal" data-d="260">
+        <li>11 etape besar &amp; 20 negara, lengkap dengan biaya hidup nyata</li>
+        <li>6 bab tematik: sahabat, masjid dunia, momen tersulit, makanan, oleh-oleh, catatan jalan</li>
+        <li>Ratusan foto asli dari perjalanan</li>
+      </ul>
+      <div class="buy__actions reveal" data-d="320">
+        <a class="btn btn--solid" data-magnet href="https://wa.me/6285282540833?text=Halo%20Kak%20Zainul%2C%20saya%20mau%20pesan%20buku%20The%20Story%20of%2030%20Friends" target="_blank" rel="noopener">
+          <span>Pesan via WhatsApp</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn--ghost" data-magnet href="mailto:zainaril13@gmail.com?subject=Pemesanan%20buku%20The%20Story%20of%2030%20Friends">Email penulis</a>
+      </div>
+      <p class="buy__note reveal" data-d="380">zainaril13@gmail.com · +62 852&#8209;8254&#8209;0833</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div>
+      <p class="foot__quote">“Pergilah. Jalan itu lebih ramah dari yang kau kira.”</p>
+      <p class="foot__by">— Z.A., Ucapan Terima Kasih</p>
+    </div>
+    <div class="foot__meta">
+      <p>© 2026 Zainul Arkaan Al Insi</p>
+      <p>Bogor, Indonesia</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════ MODAL NEGARA ══════════ -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+  <div class="modal__scrim" data-close></div>
+  <article class="modal__panel">
+    <button class="modal__x" data-close aria-label="Tutup">&times;</button>
+    <div class="modal__body" id="modalBody"></div>
+  </article>
+</div>
+
+<!-- ══════════ LIGHTBOX ══════════ -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Pratinjau foto" hidden>
+  <button class="lb__x" data-lbclose aria-label="Tutup">&times;</button>
+  <button class="lb__nav lb__nav--prev" data-lbprev aria-label="Foto sebelumnya">&#8249;</button>
+  <figure class="lb__fig"><img id="lbImg" alt="" /><figcaption id="lbCap"></figcaption></figure>
+  <button class="lb__nav lb__nav--next" data-lbnext aria-label="Foto berikutnya">&#8250;</button>
+</div>
+
+<script src="/assets/js/data.js"></script>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

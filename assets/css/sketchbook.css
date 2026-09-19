@@ -1,0 +1,248 @@
+/* ════════════════════════════════════════════════════════
+   SKETCHBOOK — lembar melengkung + kaca pembesar
+
+   Lembar yang membalik bukan pintu datar: ia rantai strip
+   bersarang yang garis singgungnya menyapu sebuah busur,
+   jadi kertasnya membengkok seperti kertas sungguhan.
+   ════════════════════════════════════════════════════════ */
+
+.sbsec{
+  position:relative;padding:clamp(80px,11vw,140px) 0 clamp(56px,7vw,96px);
+  background:
+    radial-gradient(90% 60% at 50% 0%,rgba(198,154,62,.09),transparent 62%),
+    var(--ink);
+  overflow:hidden;
+}
+.sec-head--mid{margin-inline:auto;text-align:center}
+.sec-head--mid .section-label{justify-content:center}
+.sec-head--mid .sec-head__p{margin-inline:auto}
+
+.sb-wrap{
+  display:grid;justify-items:center;gap:20px;width:100%;position:relative;z-index:2;
+  margin-block:clamp(14px,3vw,34px) clamp(26px,4vw,48px);
+}
+.sb-wrap,.sb-wrap *{-webkit-user-select:none;-moz-user-select:none;user-select:none}
+.sb-wrap img{-webkit-user-drag:none}
+
+.sb-stage{
+  display:flex;align-items:center;justify-content:center;width:100%;
+  position:relative;touch-action:pan-y;
+}
+.sb-arrow{
+  flex:none;display:inline-flex;align-items:center;justify-content:center;padding:6px 2px;
+  border:0;background:transparent;color:rgba(243,237,225,.34);cursor:pointer;
+  transition:color .22s;-webkit-tap-highlight-color:transparent;z-index:8;
+}
+.sb-arrow:hover{color:var(--paper)}
+
+.sb-3d{position:relative;flex:1 1;min-width:0;max-width:940px;perspective:1750px;perspective-origin:50% 46%}
+.sb-tilt{
+  position:relative;transform-style:preserve-3d;
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--zoom,1));
+  will-change:transform;
+}
+.sb-book{position:relative;width:100%;aspect-ratio:1760/1000;transform-style:preserve-3d;z-index:1}
+
+/* bayangan buku di atas meja — tidak punya tepi sendiri */
+.sb-cast{position:absolute;pointer-events:none;z-index:0}
+.sb-cast.ambient{
+  left:5%;right:5%;top:27%;bottom:2%;
+  background:radial-gradient(50% 50% at 50% 58%,rgba(0,0,0,.6) 0%,rgba(0,0,0,.34) 40%,rgba(0,0,0,0) 74%);
+  filter:blur(26px);opacity:calc(1 - var(--shade,0) * .42);
+}
+.sb-cast.contact{
+  left:9%;right:9%;top:62%;bottom:10%;
+  background:radial-gradient(50% 44% at 50% 42%,rgba(0,0,0,.66) 0%,rgba(0,0,0,.3) 48%,rgba(0,0,0,0) 78%);
+  filter:blur(11px);opacity:calc(1 - var(--shade,0) * .5);
+}
+.sb-cast.hair{
+  left:12%;right:12%;top:70%;bottom:17%;
+  background:radial-gradient(50% 52% at 50% 40%,rgba(0,0,0,.56) 0%,rgba(0,0,0,0) 76%);
+  filter:blur(4px);opacity:calc(1 - var(--shade,0) * .62);
+}
+
+.sb-full{position:absolute;inset:0}
+.sb-full img{width:100%;height:auto;display:block}
+.sb-half{position:absolute;top:0;bottom:0;width:50%;overflow-x:clip;overflow-y:visible}
+.sb-half.left{left:0}
+.sb-half.right{left:50%}
+.sb-half-img{width:200%;max-width:none;height:auto;display:block}
+.sb-half-img.right{margin-left:-100%}
+
+/* bayangan lembar terangkat, jatuh ke halaman di bawahnya */
+.gutter-shade{
+  position:absolute;top:var(--pg,4%);bottom:var(--pg,4%);width:46%;
+  pointer-events:none;opacity:calc(var(--shade,0) * .62);
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 5.2%,#000 94.8%,transparent 100%);
+          mask-image:linear-gradient(180deg,transparent 0,#000 5.2%,#000 94.8%,transparent 100%);
+}
+.gutter-shade.left{right:0;background:linear-gradient(270deg,rgba(52,38,20,.30),rgba(52,38,20,0) 82%)}
+.gutter-shade.right{left:0;background:linear-gradient(90deg,rgba(52,38,20,.24),rgba(52,38,20,0) 82%)}
+
+/* ── lembar yang membalik ── */
+.curl{position:absolute;top:0;height:100%;width:calc(var(--bw,0px) * var(--span));transform-style:preserve-3d;z-index:6}
+.curl.next{left:50%;transform-origin:left center;transform:rotateY(calc(-1 * var(--tt,0deg)))}
+.curl.prev{right:50%;transform-origin:right center;transform:rotateY(var(--tt,0deg))}
+.strip{position:absolute;top:0;height:100%;width:calc(var(--bw,0px) * var(--span) / var(--n));transform-style:preserve-3d}
+.curl.next .strip{transform-origin:left center}
+.curl.prev .strip{transform-origin:right center}
+.curl.next>.strip{left:0}
+.curl.prev>.strip{right:0;left:auto}
+.curl.next .strip .strip{left:100%;transform:rotateY(var(--td,0deg))}
+.curl.prev .strip .strip{right:100%;transform:rotateY(calc(-1 * var(--td,0deg)))}
+
+.face{
+  position:absolute;top:0;bottom:0;left:0;right:-1.1px;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  background-repeat:no-repeat;background-size:var(--bw,0px) auto;
+}
+.face.back{transform:rotateY(180deg)}
+.face .sh,.face .gl{
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 5.2%,#000 94.8%,transparent 100%);
+          mask-image:linear-gradient(180deg,transparent 0,#000 5.2%,#000 94.8%,transparent 100%);
+}
+.strip.edge .face .sh,.strip.edge .face .gl{
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 9%,#000 91%,transparent 100%),var(--hf);
+          mask-image:linear-gradient(180deg,transparent 0,#000 9%,#000 91%,transparent 100%),var(--hf);
+  -webkit-mask-composite:source-in;mask-composite:intersect;
+}
+.curl.next .strip.edge .face.front,.curl.prev .strip.edge .face.back{--hf:linear-gradient(90deg,#000 0 22%,transparent 96%)}
+.curl.next .strip.edge .face.back,.curl.prev .strip.edge .face.front{--hf:linear-gradient(270deg,#000 0 22%,transparent 96%)}
+.face .sh{position:absolute;left:0;right:0;top:var(--pg,4%);bottom:var(--pg,4%);pointer-events:none}
+.curl.next .face.front .sh,.curl.prev .face.back .sh{background:linear-gradient(90deg,rgba(58,43,20,var(--a1,0)),rgba(58,43,20,var(--a2,0)))}
+.curl.next .face.back .sh,.curl.prev .face.front .sh{background:linear-gradient(90deg,rgba(58,43,20,var(--a2,0)),rgba(58,43,20,var(--a1,0)))}
+.face .gl{
+  position:absolute;left:0;right:0;top:var(--pg,4%);bottom:var(--pg,4%);
+  pointer-events:none;background:#fffaf0;
+  opacity:calc(var(--shade,0) * var(--lit,1) * var(--lit,1) * .20);
+}
+
+/* ── kaca pembesar: benda nyata yang tergeletak di atas halaman ── */
+.loupe{
+  position:absolute;left:0;top:0;width:var(--lr,250px);height:var(--lr,250px);
+  pointer-events:none;z-index:80;opacity:0;transition:opacity .25s ease;will-change:transform;
+}
+.loupe.on{opacity:1}
+.loupe.held .ring{cursor:grabbing}
+.loupe .ring{
+  position:absolute;inset:0;border-radius:50%;pointer-events:auto;cursor:grab;
+  padding:calc(var(--lr,250px) * .058);
+  box-shadow:0 1px 2px rgba(0,0,0,.4),0 10px 18px rgba(0,0,0,.34),
+             0 26px 40px rgba(0,0,0,.3),0 48px 66px rgba(0,0,0,.22);
+}
+/* bezelnya cincin, jadi kacanya benar-benar tembus pandang */
+.loupe .ring:before{
+  content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none;
+  background:linear-gradient(146deg,#fdf7e9 0%,#e6d7b4 14%,#b69d70 32%,#7d6740 50%,#cdbb92 66%,#f4ead3 80%,#9b8459 100%);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.8),inset 0 -2px 3px rgba(70,52,26,.5);
+  -webkit-mask-image:radial-gradient(circle closest-side at 50% 50%,transparent 0 88.2%,#000 89.8% 100%);
+          mask-image:radial-gradient(circle closest-side at 50% 50%,transparent 0 88.2%,#000 89.8% 100%);
+}
+.loupe .grip{
+  position:absolute;left:50%;top:50%;
+  width:calc(var(--lr,250px) * .74);height:calc(var(--lr,250px) * .125);
+  transform-origin:0 50%;transform:rotate(40deg) translate(calc(var(--lr,250px) * .33),-50%);
+  border-radius:calc(var(--lr,250px) * .06);pointer-events:auto;cursor:grab;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.46) 0 13%,rgba(255,255,255,0) 44%,rgba(0,0,0,.26) 100%),
+    linear-gradient(90deg,#d9bd82 0 14%,#a9884e 14% 20%,#6d4c2b 20% 62%,#5a3d22 62% 92%,#7a5631 92% 100%);
+  box-shadow:0 8px 15px rgba(0,0,0,.34),0 18px 26px rgba(0,0,0,.2);
+}
+.lens{
+  position:relative;display:block;width:100%;height:100%;border-radius:50%;overflow:hidden;
+  box-shadow:inset 0 0 0 1px rgba(52,40,22,.55),inset 0 4px 12px rgba(40,30,14,.28),
+             inset 0 -7px 16px rgba(255,250,240,.14);
+}
+.lens:before,.lens:after{content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none}
+/* kacanya membias dan menggelap ke arah tepi, dengan sedikit fringe warna */
+.lens:before{
+  z-index:1;
+  background:radial-gradient(circle at 50% 50%,rgba(0,0,0,0) 54%,rgba(58,44,26,.10) 76%,rgba(46,34,16,.34) 100%);
+  box-shadow:inset 0 0 0 2px rgba(130,162,196,.26),inset 0 0 0 4px rgba(206,158,112,.15);
+}
+/* kubahnya: satu specular lebar dan satu sabit tipis di seberangnya */
+.lens:after{
+  z-index:2;
+  background:
+    radial-gradient(36% 26% at 29% 19%,rgba(255,255,255,.30),rgba(255,255,255,0) 76%),
+    radial-gradient(24% 16% at 74% 86%,rgba(255,255,255,.12),rgba(255,255,255,0) 80%),
+    linear-gradient(150deg,rgba(255,255,255,.06) 0 18%,rgba(255,255,255,0) 42%);
+}
+/* salinan kedua buku, di luar tilt, diperbesar tepat di titik yang ditutupi kaca */
+.zoomwrap{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;opacity:0}
+.zoominner{position:absolute;inset:0;transform-origin:0 0}
+@media (pointer:coarse){.loupe{display:none}}
+
+/* ── zona sentuh + kendali ── */
+.sb-zone{position:absolute;top:0;bottom:0;border:0;background:transparent;cursor:grab;z-index:60;-webkit-tap-highlight-color:transparent}
+.sb-zone:active{cursor:grabbing}
+.sb-prev{left:0;width:50%}
+.sb-next{right:0;width:50%}
+
+.sb-captions{display:grid;justify-items:center}
+.sb-captions>*{grid-area:1/1;margin:0}
+.sb-caption{
+  font-family:var(--fm);font-size:12px;letter-spacing:.24em;text-transform:uppercase;
+  color:rgba(243,237,225,.6);animation:sbCapIn .5s ease both;
+}
+.sb-caption.live{animation:none}
+@keyframes sbCapIn{0%{opacity:0}}
+
+.sb-tools{
+  display:flex;align-items:center;gap:6px;
+  border:1px solid rgba(243,237,225,.16);border-radius:999px;
+  padding:5px 7px;background:rgba(243,237,225,.05);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+}
+.tool{
+  width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;
+  border:0;border-radius:50%;background:transparent;color:rgba(243,237,225,.62);
+  cursor:pointer;transition:background-color .18s,color .18s;
+}
+.tool:hover{background:rgba(243,237,225,.1);color:var(--paper)}
+.tool[aria-pressed="true"]{background:rgba(180,85,42,.24);color:var(--terra)}
+.tool:disabled{opacity:.3;cursor:default;background:transparent}
+.tool svg{width:15px;height:15px;display:block}
+.tool-sep{width:1px;height:17px;background:rgba(243,237,225,.16);margin:0 2px}
+.zoom-read{
+  font-family:var(--fm);font-size:11px;letter-spacing:.1em;color:rgba(243,237,225,.46);
+  min-width:44px;text-align:center;font-variant-numeric:tabular-nums;
+}
+.sb-hint{
+  margin:0;font-family:var(--fm);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);transition:opacity .4s ease;text-align:center;
+}
+.sb-hint.gone{opacity:0}
+
+/* ── indeks etape ── */
+.sb-idx-label{margin-top:clamp(20px,3vw,36px)}
+.sb-index{list-style:none;margin:0;padding:0;border-top:1px solid rgba(243,237,225,.14)}
+.sbplate{
+  display:grid;grid-template-columns:3.4em minmax(0,1fr) auto;gap:18px;align-items:baseline;
+  width:100%;padding:15px 4px;border:0;border-bottom:1px solid rgba(243,237,225,.14);
+  background:transparent;text-align:left;color:inherit;cursor:pointer;
+  transition:background-color .22s ease,padding-left .22s ease;
+}
+.sbplate:hover,.sbplate[aria-current="true"]{background:rgba(243,237,225,.05);padding-left:12px}
+.sbplate .n{font-family:var(--fm);font-size:11px;color:var(--muted);letter-spacing:.06em}
+.sbplate .t{font-family:var(--fd);font-size:clamp(19px,2.1vw,26px)}
+.sbplate .p{font-family:var(--fm);font-size:9.5px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;text-align:right}
+.sbplate[aria-current="true"] .p{color:var(--terra)}
+
+@media (max-width:720px){
+  .sb-wrap{width:100vw;margin-inline:calc(50% - 50vw)}
+  .sb-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:70;padding:14px 6px}
+  .sb-arrow.left{left:2px}
+  .sb-arrow.right{right:2px}
+  .sb-3d{max-width:none}
+  .sb-stage{padding-inline:6px}
+  .sb-caption{font-size:10.5px;letter-spacing:.18em}
+  .sb-hint{font-size:9px;letter-spacing:.1em;padding:0 16px}
+  .sbplate{grid-template-columns:2.6em minmax(0,1fr);gap:12px;padding:13px 2px}
+  .sbplate .p{display:none}
+  .sbplate .t{font-size:19px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .sb-caption{animation:none}
+}
