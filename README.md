@@ -11,7 +11,7 @@ dalam satu tahun — dengan ransel, mimpi, dan satu sama lain.
 | Bagian | Keterangan |
 | --- | --- |
 | Hero | Sampul buku 3D yang condong mengikuti kursor, cap paspor |
-| Sketchbook | Buku 35 halaman yang dapat dibalik, berisi ringkasan tiga halaman untuk tiap negara + kaca pembesar |
+| Sketchbook | Buku 13 spread yang dapat dibalik: satu passport profile ringkas untuk setiap negara + kaca pembesar opsional |
 | Rute | Sebelas etape, dari Soekarno-Hatta sampai pulang |
 | Negara | Kartu per negara, klik untuk catatan lengkap |
 | Galeri | Foto asli dari dalam buku, bisa difilter per negara |
@@ -48,7 +48,7 @@ assets/
   js/data.js           — konten dari naskah buku
   js/app.js            — interaksi
   img/                 — foto perjalanan (46 berkas)
-  book/                — 35 spread buku: pembuka, catatan, makan & ongkos tiap negara
+  book/                — 13 spread buku: pembuka, 11 passport profile negara, dan penutup
 ```
 
 ## Pemesanan

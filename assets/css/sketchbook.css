@@ -29,13 +29,14 @@
   position:relative;touch-action:pan-y;
 }
 .sb-arrow{
-  flex:none;display:inline-flex;align-items:center;justify-content:center;padding:6px 2px;
-  border:0;background:transparent;color:rgba(243,237,225,.34);cursor:pointer;
-  transition:color .22s;-webkit-tap-highlight-color:transparent;z-index:8;
+  flex:none;display:inline-flex;align-items:center;justify-content:center;width:48px;height:76px;
+  border:1px solid rgba(243,237,225,.13);border-radius:999px;background:rgba(243,237,225,.025);
+  color:rgba(243,237,225,.48);cursor:pointer;transition:color .22s,background .22s,border-color .22s;
+  -webkit-tap-highlight-color:transparent;z-index:8;
 }
-.sb-arrow:hover{color:var(--paper)}
+.sb-arrow:hover{color:var(--paper);background:rgba(180,85,42,.16);border-color:rgba(180,85,42,.55)}
 
-.sb-3d{position:relative;flex:1 1;min-width:0;max-width:940px;perspective:1750px;perspective-origin:50% 46%}
+.sb-3d{position:relative;flex:1 1;min-width:0;max-width:min(1180px,calc(100vw - 112px));perspective:1750px;perspective-origin:50% 46%}
 .sb-tilt{
   position:relative;transform-style:preserve-3d;
   transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--zoom,1));

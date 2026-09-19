@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Membangun spread buku (1760x1000) dari ringkasan di content.py.
 
-Lima jenis halaman: title, open, notes, taste, end.
+Setiap negara menjadi satu spread profil perjalanan yang mudah dibaca.
 """
 import os, math, random, json
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageEnhance
@@ -93,7 +93,12 @@ def stain(r, rng):
 
 
 def photo(path, box_w, rot, rng, cap=None, tapes=2):
-    im = ImageEnhance.Color(Image.open(path).convert("RGB")).enhance(0.9)
+    # Sumber foto berukuran web; jaga detail saat dipasang sebagai foto utama
+    # dan hindari tampilan kusam ketika spread diperbesar.
+    im = Image.open(path).convert("RGB")
+    im = ImageEnhance.Color(im).enhance(1.08)
+    im = ImageEnhance.Contrast(im).enhance(1.04)
+    im = ImageEnhance.Sharpness(im).enhance(1.32)
     k = box_w / im.width
     im = im.resize((box_w, max(1, round(im.height * k))), Image.LANCZOS)
     pad, bot = 13, (46 if cap else 13)
@@ -206,6 +211,15 @@ def para(d, x, y, txt, f, mw, lh, fill=BODY, limit=99):
         d.text((x, y), ln, font=f, fill=fill)
         y += lh
     return y
+
+
+def snip(txt, limit=180):
+    """Ambil satu gagasan utuh untuk ringkasan yang tetap nyaman dibaca."""
+    clean = " ".join(txt.replace("\n", " ").split())
+    if len(clean) <= limit:
+        return clean
+    cut = clean[:limit].rsplit(" ", 1)[0]
+    return cut.rstrip(".,;: ") + "..."
 
 
 def section(d, x, y, label, body, mw, size=22, lh=31, limit=99):
@@ -331,6 +345,92 @@ def page_open(page, d, c, rng):
     page.alpha_composite(st, (RX + CW - st.width + 40, BOT - st.height + 10))
 
 
+def page_country(page, d, c, rng):
+    """Satu spread editorial yang merangkum satu negara tanpa halaman berulang."""
+    runhead(d, c["neg"], "passport profile", c["no"])
+    accents = [(154, 72, 39), (44, 89, 104), (168, 117, 38),
+               (65, 94, 75), (109, 68, 54), (91, 70, 111)]
+    accent = accents[(int(c["no"]) - 1) % len(accents)]
+    # Latar berwarna harus tetap terang: ringkasan dibaca di layar, bukan
+    # sekadar dilihat sebagai dekorasi.
+    wash = tuple(234 + round(v / 255 * 14) for v in accent) + (255,)
+    wash_2 = tuple(243 + round(v / 255 * 7) for v in accent) + (255,)
+
+    # Halaman kiri: fakta yang bisa dipindai cepat.
+    d.rounded_rectangle([LX - 18, TOP - 12, HALF - 50, BOT], radius=18,
+                        fill=wash, outline=accent + (60,), width=2)
+    d.rectangle([LX, TOP + 2, LX + 8, TOP + 74], fill=accent + (255,))
+    d.text((LX + 26, TOP + 2), "PASSPORT PROFILE  /  " + c["no"] + " OF 11",
+           font=CONDB(16), fill=accent + (255,))
+
+    title_size = 78 if len(c["nama"]) < 16 else 64
+    y = TOP + 48
+    title_lines = wrap(d, c["nama"], DISP(title_size), CW - 34)[:2]
+    for ln in title_lines:
+        d.text((LX, y), ln, font=DISP(title_size), fill=INK)
+        y += title_size + 4
+    wobble(d, LX + 2, y - 5, LX + min(CW - 40, d.textlength(title_lines[-1], font=DISP(title_size))),
+           y - 3, rng, accent + (255,), 3)
+    y += 16
+    d.text((LX, y), c["sub"], font=DISPI(27), fill=(104, 92, 76))
+    y += 48
+    y = para(d, LX, y, snip(c["tagline"], 155), DISPR(23), CW - 34, 31, BODY, 3) + 12
+
+    facts = c["fakta"][:4]
+    card_h = 74
+    for i, (label, value) in enumerate(facts):
+        fy = y + i * (card_h + 9)
+        d.rounded_rectangle([LX, fy, HALF - 72, fy + card_h], radius=9,
+                            fill=(248, 244, 233, 196), outline=accent + (52,), width=1)
+        d.text((LX + 15, fy + 12), label.upper(), font=CONDB(13), fill=accent + (215,))
+        vals = wrap(d, snip(value, 64), DISPR(20), CW - 118)[:2]
+        for j, val in enumerate(vals):
+            d.text((LX + 15, fy + 32 + j * 21), val, font=DISPR(20), fill=BODY)
+
+    footer_y = min(BOT - 70, y + len(facts) * (card_h + 9) + 8)
+    d.line([(LX, footer_y), (HALF - 72, footer_y)], fill=accent + (90,), width=2)
+    hand(page, (LX, footer_y + 10), c["kota"] + "  /  " + c["tgl"], 37, -1.2,
+         accent + (255,), max_w=CW - 24)
+
+    # Halaman kanan: foto dominan, lalu tiga potongan cerita paling penting.
+    d.rounded_rectangle([RX - 24, TOP - 12, PW - 56, BOT], radius=18,
+                        fill=wash_2, outline=accent + (75,), width=1)
+    for i in range(7):
+        yy = TOP + 18 + i * 58
+        d.line([(RX - 6, yy), (PW - 72, yy - 76)], fill=accent + (17,), width=2)
+
+    photos = c["foto"]
+    main_photo = fit_photo(os.path.join(SRC, photos[0] + ".webp"), 565, 455, rng,
+                           cap=c["capA"], tapes=2, rot=(-2.0 if int(c["no"]) % 2 else 2.0))
+    if main_photo:
+        place(page, main_photo, RX, TOP + 4, CW)
+    mini_photo = fit_photo(os.path.join(SRC, photos[1 % len(photos)] + ".webp"), 260, 190, rng,
+                           cap=None, tapes=1, rot=(4.2 if int(c["no"]) % 2 else -4.2))
+    if mini_photo:
+        page.alpha_composite(mini_photo, (PW - mini_photo.width - 80, TOP + 278))
+
+    by = TOP + 488
+    d.text((RX, by), "SEKILAS DI " + c["nama"].upper(), font=CONDB(16), fill=accent + (255,))
+    by += 31
+    by = para(d, RX, by, snip(c["lihat"], 168), DISPR(22), CW - 8, 30, BODY, 4) + 15
+
+    split = (CW - 18) // 2
+    cards = [
+        ("COBA", c["makan"][0][0], c["makan"][0][1]),
+        ("GERAK", c["transport"], c["ongkos"][0][1]),
+    ]
+    for i, (label, head, body) in enumerate(cards):
+        x = RX + i * (split + 18)
+        d.rounded_rectangle([x, by, x + split, BOT - 16], radius=10,
+                            fill=(248, 244, 233, 214), outline=accent + (54,), width=1)
+        d.text((x + 16, by + 14), label, font=CONDB(13), fill=accent + (240,))
+        d.text((x + 16, by + 35), snip(head, 28), font=DISPB(21), fill=INK)
+        para(d, x + 16, by + 62, snip(body, 74), DISPI(18), split - 30, 24, (96, 84, 68), 3)
+
+    stamp = passport_stamp(c["kode"], c["kota"], rng)
+    page.alpha_composite(stamp, (HALF - 192, TOP + 28))
+
+
 def page_notes(page, d, c, rng):
     runhead(d, c["neg"], "catatan", c["no"])
     F = c["foto"]
@@ -403,7 +503,7 @@ def page_end(page, d, c, rng):
         fill_bottom(page, os.path.join(SRC, c["foto"][1] + ".webp"), RX, y + 26, CW, rng)
 
 
-KIND = dict(title=page_title, open=page_open, notes=page_notes, taste=page_taste, end=page_end)
+KIND = dict(title=page_title, country=page_country, end=page_end)
 
 
 # ══════════════ build ══════════════
@@ -428,7 +528,7 @@ if __name__ == "__main__":
     for i, c in enumerate(pages):
         img = build(c, i)
         p = os.path.join(OUT, c["id"] + ".webp")
-        img.save(p, "WEBP", quality=84, method=6)
+        img.save(p, "WEBP", quality=92, method=6)
         man.append({"id": c["id"], "neg": c["neg"], "judul": c.get("judul", c["sub"]),
                     "no": c.get("no", ""), "kind": c["kind"]})
         print("%-22s %-6s %dKB" % (c["id"], c["kind"], os.path.getsize(p) // 1024))

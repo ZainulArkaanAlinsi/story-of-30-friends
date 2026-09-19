@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Ringkasan per negara, disarikan dari naskah buku.
 
-Tiap negara jadi tiga halaman: Pembuka, Catatan, lalu Makan & Ongkos.
-Angka dan kutipan diambil apa adanya dari bab-bab bukunya.
+Tiap negara menjadi satu spread profil perjalanan yang padat: gambaran,
+fakta penting, pengalaman paling diingat, makanan, dan ongkos.
 """
 
 NEGARA = [
@@ -377,17 +377,17 @@ FOTO = {
 
 
 def halaman():
-    """Urutan halaman buku: judul, tiga halaman per negara, lalu penutup."""
+    """Urutan buku: judul, satu spread ringkasan per negara, lalu penutup."""
     out = [JUDUL]
     for n in NEGARA:
-        for kind, judul in (("open", "Pembuka"), ("notes", "Catatan"),
-                            ("taste", "Makan & Ongkos")):
-            p = dict(n)
-            p["kind"] = kind
-            p["judul"] = judul
-            p["neg"] = n["nama"]
-            p["foto"] = FOTO[n["id"]]
-            p["id"] = n["id"] + "-" + kind
-            out.append(p)
+        p = dict(n)
+        p["kind"] = "country"
+        p["judul"] = "Ringkasan Negara"
+        p["neg"] = n["nama"]
+        p["foto"] = FOTO[n["id"]]
+        # Tetap memakai nama berkas pembuka lama agar cache pengunjung lama
+        # langsung menerima desain baru tanpa referensi aset putus.
+        p["id"] = n["id"] + "-open"
+        out.append(p)
     out.append(PENUTUP)
     return out

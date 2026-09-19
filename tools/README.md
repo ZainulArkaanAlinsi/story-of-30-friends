@@ -3,7 +3,7 @@
 Pembangkit halaman buku yang dipakai di bagian Sketchbook.
 
 - `content.py` — ringkasan tiap negara, disarikan dari naskah buku.
-  Tiga halaman per negara: Pembuka, Catatan, Makan & Ongkos.
+  Satu spread passport profile per negara: fakta, pengalaman, makanan, dan ongkos.
 - `makebook.py` — menggambar tiap spread (1760×1000) ke `assets/book/*.webp`
   dan menulis `book_manifest.json`.
 

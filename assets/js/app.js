@@ -146,7 +146,7 @@ let LB = [];
   ['group-0','group-1','group-2','group-3','group-4','group-5'].forEach(f =>
     shots.push({ f, cap: 'Tiga puluh sahabat', neg: '30 Sahabat', id: 'group' }));
 
-  const cats = [{ id: 'all', nama: 'Semua' },
+  const cats = [{ id: 'featured', nama: 'Pilihan' }, { id: 'all', nama: 'Semua' },
                 ...COUNTRIES.map(c => ({ id: c.id, nama: c.nama })),
                 { id: 'group', nama: '30 Sahabat' }];
 
@@ -162,20 +162,23 @@ let LB = [];
   });
 
   function render(cat) {
-    const list = cat === 'all' ? shots : shots.filter(s => s.id === cat);
+    const list = cat === 'featured'
+      ? shots.filter(s => s.f === 'group-0' || s.f === 'group-3' || s.f === COUNTRIES.find(c => c.id === s.id)?.foto[0])
+      : cat === 'all' ? shots : shots.filter(s => s.id === cat);
     LB = list;
     grid.innerHTML = '';
     list.forEach((s, i) => {
       const fig = el('figure', 'shot');
-      fig.innerHTML = `<img loading="lazy" src="/assets/img/${s.f}.webp" alt="${s.cap}" />
-                       <figcaption>${s.neg} — ${s.cap}</figcaption>`;
+      fig.innerHTML = `<img loading="lazy" decoding="async" src="/assets/img/${s.f}.webp" alt="${s.cap}" />
+                       <figcaption><b>${s.neg}</b><span>${s.cap}</span></figcaption>
+                       <span class="shot__open" aria-hidden="true">Lihat foto</span>`;
       fig.addEventListener('click', () => openLb(i));
       grid.appendChild(fig);
       if (REDUCED) fig.classList.add('is-in');
     });
     watch(grid);
   }
-  render('all');
+  render('featured');
 })();
 
 /* ── LIGHTBOX ────────────────────────────────────────── */
@@ -222,9 +225,13 @@ addEventListener('keydown', e => {
 (() => {
   const track = $('#routeTrack');
   if (!track || typeof ROUTE === 'undefined') return;
-  ROUTE.forEach(s => {
+  ROUTE.forEach((s, i) => {
+    const country = COUNTRIES.find(c => c.nama === s.neg);
+    const photo = country?.foto[0] || (i === 0 ? 'group-0' : 'group-3');
     const d = el('div', 'stop');
-    d.innerHTML = `<div class="stop__dot"></div>
+    d.innerHTML = `<div class="stop__photo"><img loading="lazy" decoding="async" src="/assets/img/${photo}.webp" alt="${s.kota}" />
+        <span>${String(i + 1).padStart(2, '0')}</span></div>
+      <div class="stop__dot"></div>
       <p class="stop__code">${s.kode}</p>
       <h3 class="stop__city">${s.kota}</h3>
       <p class="stop__neg">${s.neg}</p>
@@ -322,8 +329,11 @@ watch(document);
   const loupeBtn = $('#loupeBtn'), zIn = $('#zIn'), zOut = $('#zOut');
   const ribbon = $('#sbRibbon'), sbPos = $('#sbPos'), sbTot = $('#sbTot'), sbFill = $('#sbFill');
 
-  const PAGES = BOOK.map(b => ({ url: `/assets/book/${b.id}.webp`, title: b.neg,
-                                 place: b.judul, kind: b.kind, no: b.no }));
+  const PAGES = BOOK
+    .filter(b => b.kind === 'title' || b.kind === 'open' || b.kind === 'end')
+    .map(b => ({ url: `/assets/book/${b.id}.webp`, title: b.neg,
+                 place: b.kind === 'open' ? 'Passport Profile' : b.judul,
+                 kind: b.kind, no: b.no }));
   const M = PAGES.length;
   if (sbTot) sbTot.textContent = String(M);
 
@@ -597,7 +607,7 @@ watch(document);
 
   /* ── kaca pembesar ── */
   const MAG = 2.3;
-  let loupeOn = true, lx = null, ly = null, lgrab = null, lTarget = null;
+  let loupeOn = false, lx = null, ly = null, lgrab = null, lTarget = null;
   const loupeSize = () => Math.round(Math.max(150, Math.min(250, book.clientWidth * .225)));
   const bookBox = () => ({ x: 0, y: 0, w: book.clientWidth, h: book.clientHeight });
 
