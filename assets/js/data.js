@@ -255,3 +255,43 @@ const NOTES = [
     d: 'Migros, Şok, BİM di Turki. Setiap negara punya jaringannya sendiri. Pakai untuk kebutuhan harian — air, roti, buah, biskuit. Selalu lebih murah dari minimarket dekat hostel. Berjalanlah lima menit lebih jauh untuk menemukannya. Lima menit itu, selama setahun, akan menghematmu lebih dari yang kau kira.'
   }
 ];
+
+/* Halaman buku — urutan spread yang dibalik di bagian Sketchbook.
+   Dibangkitkan dari naskah: judul, tiga halaman per negara, lalu penutup. */
+const BOOK = [
+  { id: "00-judul",            neg: "Pembuka",           judul: "Exploring 20 Countries in One Year", no: "",    kind: "title" },
+  { id: "malaysia-open",       neg: "Malaysia",          judul: "Pembuka",         no: "01",  kind: "open" },
+  { id: "malaysia-notes",      neg: "Malaysia",          judul: "Catatan",         no: "01",  kind: "notes" },
+  { id: "malaysia-taste",      neg: "Malaysia",          judul: "Makan & Ongkos",  no: "01",  kind: "taste" },
+  { id: "egypt-open",          neg: "Mesir",             judul: "Pembuka",         no: "02",  kind: "open" },
+  { id: "egypt-notes",         neg: "Mesir",             judul: "Catatan",         no: "02",  kind: "notes" },
+  { id: "egypt-taste",         neg: "Mesir",             judul: "Makan & Ongkos",  no: "02",  kind: "taste" },
+  { id: "morocco-open",        neg: "Maroko",            judul: "Pembuka",         no: "03",  kind: "open" },
+  { id: "morocco-notes",       neg: "Maroko",            judul: "Catatan",         no: "03",  kind: "notes" },
+  { id: "morocco-taste",       neg: "Maroko",            judul: "Makan & Ongkos",  no: "03",  kind: "taste" },
+  { id: "europe-open",         neg: "Eropa",             judul: "Pembuka",         no: "04",  kind: "open" },
+  { id: "europe-notes",        neg: "Eropa",             judul: "Catatan",         no: "04",  kind: "notes" },
+  { id: "europe-taste",        neg: "Eropa",             judul: "Makan & Ongkos",  no: "04",  kind: "taste" },
+  { id: "turkey-open",         neg: "Turki",             judul: "Pembuka",         no: "05",  kind: "open" },
+  { id: "turkey-notes",        neg: "Turki",             judul: "Catatan",         no: "05",  kind: "notes" },
+  { id: "turkey-taste",        neg: "Turki",             judul: "Makan & Ongkos",  no: "05",  kind: "taste" },
+  { id: "saudi-open",          neg: "Arab Saudi",        judul: "Pembuka",         no: "06",  kind: "open" },
+  { id: "saudi-notes",         neg: "Arab Saudi",        judul: "Catatan",         no: "06",  kind: "notes" },
+  { id: "saudi-taste",         neg: "Arab Saudi",        judul: "Makan & Ongkos",  no: "06",  kind: "taste" },
+  { id: "nepal-open",          neg: "Nepal",             judul: "Pembuka",         no: "07",  kind: "open" },
+  { id: "nepal-notes",         neg: "Nepal",             judul: "Catatan",         no: "07",  kind: "notes" },
+  { id: "nepal-taste",         neg: "Nepal",             judul: "Makan & Ongkos",  no: "07",  kind: "taste" },
+  { id: "thailand-open",       neg: "Thailand",          judul: "Pembuka",         no: "08",  kind: "open" },
+  { id: "thailand-notes",      neg: "Thailand",          judul: "Catatan",         no: "08",  kind: "notes" },
+  { id: "thailand-taste",      neg: "Thailand",          judul: "Makan & Ongkos",  no: "08",  kind: "taste" },
+  { id: "laos-open",           neg: "Laos",              judul: "Pembuka",         no: "09",  kind: "open" },
+  { id: "laos-notes",          neg: "Laos",              judul: "Catatan",         no: "09",  kind: "notes" },
+  { id: "laos-taste",          neg: "Laos",              judul: "Makan & Ongkos",  no: "09",  kind: "taste" },
+  { id: "vietnam-open",        neg: "Vietnam",           judul: "Pembuka",         no: "10",  kind: "open" },
+  { id: "vietnam-notes",       neg: "Vietnam",           judul: "Catatan",         no: "10",  kind: "notes" },
+  { id: "vietnam-taste",       neg: "Vietnam",           judul: "Makan & Ongkos",  no: "10",  kind: "taste" },
+  { id: "hongkong-open",       neg: "Hong Kong & Makau", judul: "Pembuka",         no: "11",  kind: "open" },
+  { id: "hongkong-notes",      neg: "Hong Kong & Makau", judul: "Catatan",         no: "11",  kind: "notes" },
+  { id: "hongkong-taste",      neg: "Hong Kong & Makau", judul: "Makan & Ongkos",  no: "11",  kind: "taste" },
+  { id: "99-penutup",          neg: "Penutup",           judul: "Home at last",    no: "",    kind: "end" },
+];
