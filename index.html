@@ -124,10 +124,11 @@
 <section class="sbsec" id="buku-flip">
   <div class="wrap">
     <header class="sec-head sec-head--mid">
-      <p class="section-label reveal">Buka Bukunya</p>
-      <h2 class="sec-head__h reveal" data-d="80">Balik halamannya<br /><em>seperti kertas sungguhan.</em></h2>
-      <p class="sec-head__p reveal" data-d="160">Seret halaman untuk membaliknya. Seret kaca pembesarnya
-      ke mana saja. Panah kiri/kanan juga jalan.</p>
+      <p class="section-label reveal">Baca Ringkasannya</p>
+      <h2 class="sec-head__h reveal" data-d="80">Tiga puluh lima halaman,<br /><em>sebelas negara, satu duduk.</em></h2>
+      <p class="sec-head__p reveal" data-d="160">Tiap negara dapat tiga halaman — pembukanya, catatan
+      cuaca dan orang-orangnya, lalu apa yang dimakan dan berapa ongkosnya. Balik terus sampai habis;
+      kamu sudah dapat inti bukunya tanpa membaca 346 halaman.</p>
     </header>
   </div>
 
@@ -141,7 +142,11 @@
           <div class="sb-cast ambient" aria-hidden="true"></div>
           <div class="sb-cast contact" aria-hidden="true"></div>
           <div class="sb-cast hair" aria-hidden="true"></div>
+          <div class="sb-cover" aria-hidden="true"></div>
+          <div class="sb-edge sb-edge--l" aria-hidden="true"></div>
+          <div class="sb-edge sb-edge--r" aria-hidden="true"></div>
           <div class="sb-book" id="sbBook"></div>
+          <div class="sb-ribbon" id="sbRibbon" aria-hidden="true"></div>
         </div>
         <div class="zoomwrap" id="zoomWrap" aria-hidden="true"><div class="zoominner" id="zoomInner"></div></div>
         <div class="loupe" id="loupe"><span class="grip"></span><span class="ring"><span class="lens"></span></span></div>
@@ -161,12 +166,17 @@
       <button class="tool" id="loupeBtn" type="button" aria-label="kaca pembesar" aria-pressed="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8.8" cy="8.8" r="5.8"/><path d="M13 13l4.4 4.4"/><path d="M6.4 7.2a3.2 3.2 0 0 1 2.4-1.4" opacity=".55"/></svg></button>
     </div>
 
-    <p class="sb-hint" id="sbHint">Seret halaman untuk membalik · Seret kacanya ke atas kertas</p>
+    <div class="sb-meter">
+      <p class="sb-meter__n"><b id="sbPos">01</b> <span>/</span> <span id="sbTot">35</span> halaman</p>
+      <div class="sb-meter__rail"><i id="sbFill"></i></div>
+    </div>
+
+    <p class="sb-hint" id="sbHint">Seret halaman untuk membalik · Panah kiri/kanan · Seret kacanya ke atas kertas</p>
   </div>
 
   <div class="wrap">
-    <p class="section-label sb-idx-label">Daftar Etape</p>
-    <ol class="sb-index" id="sbIndex"></ol>
+    <p class="section-label sb-idx-label">Daftar Isi — lompat ke mana saja</p>
+    <div class="sb-index" id="sbIndex"></div>
   </div>
 </section>
 
