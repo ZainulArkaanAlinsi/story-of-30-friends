@@ -313,16 +313,42 @@ watch(document);
    ════════════════════════════════════════════════════════════ */
 (() => {
   const wrap = $('#sbWrap');
-  if (!wrap || typeof COUNTRIES === 'undefined') return;
+  if (!wrap || typeof BOOK === 'undefined') return;
 
   const stage = $('#sbStage'), sb3d = $('#sb3d'), book = $('#sbBook');
   const capBox = $('#sbCaptions'), hint = $('#sbHint');
   const zoomWrap = $('#zoomWrap'), zoomInner = $('#zoomInner');
   const loupe = $('#loupe'), zRead = $('#zRead');
   const loupeBtn = $('#loupeBtn'), zIn = $('#zIn'), zOut = $('#zOut');
+  const ribbon = $('#sbRibbon'), sbPos = $('#sbPos'), sbTot = $('#sbTot'), sbFill = $('#sbFill');
 
-  const PAGES = COUNTRIES.map(c => ({ url: `/assets/book/${c.id}.webp`, title: c.nama, place: c.sub }));
+  const PAGES = BOOK.map(b => ({ url: `/assets/book/${b.id}.webp`, title: b.neg,
+                                 place: b.judul, kind: b.kind, no: b.no }));
   const M = PAGES.length;
+  if (sbTot) sbTot.textContent = String(M);
+
+  /* Hanya tetangga halaman yang diunduh — 35 spread terlalu berat
+     untuk dimuat sekaligus. */
+  const loaded = new Set();
+  function ensure(i) {
+    for (const j of [i, (i + 1) % M, (i - 1 + M) % M, (i + 2) % M]) {
+      if (loaded.has(j)) continue;
+      loaded.add(j);
+      new Image().src = PAGES[j].url;
+    }
+  }
+
+  /* Tebal tumpukan tepi kertas, panjang pita, dan penghitung —
+     semuanya membaca posisi halaman yang sama. */
+  function updateShell() {
+    const cur = turn ? turn.to : idx;
+    const k = M > 1 ? cur / (M - 1) : 0;
+    sb3d.style.setProperty('--el', (4 + 26 * k).toFixed(1) + 'px');
+    sb3d.style.setProperty('--er', (4 + 26 * (1 - k)).toFixed(1) + 'px');
+    if (ribbon) ribbon.style.height = (38 + 34 * k).toFixed(1) + '%';
+    if (sbPos) sbPos.textContent = String(cur + 1).padStart(2, '0');
+    if (sbFill) sbFill.style.width = (k * 100).toFixed(1) + '%';
+  }
 
   const N = 18;          /* jumlah strip — cukup untuk lengkung mulus */
   const SPAN = 0.470;    /* dari gutter ke tepi luar, sebagai pecahan */
@@ -408,7 +434,8 @@ watch(document);
     a.setAttribute('aria-label', 'halaman sebelumnya');
     b.setAttribute('aria-label', 'halaman berikutnya');
     book.appendChild(a); book.appendChild(b);
-    layout(); caption(); marks(); syncZoomLayer(); placeLoupe();
+    layout(); caption(); marks(); updateShell(); ensure(turn ? turn.to : idx);
+    syncZoomLayer(); placeLoupe();
   }
 
   let capOut = null, capIn = null;
@@ -577,7 +604,9 @@ watch(document);
   function restLoupe() {
     const b = bookBox();
     if (!b.w) return;
-    lx = b.x + b.w * .86; ly = b.y + b.h * .80;
+    /* istirahat di sudut luar, setengah menggantung di tepi kertas —
+       supaya tidak menutupi teks saat halaman baru dibuka */
+    lx = b.x + b.w * .945; ly = b.y + b.h * .88;
     placeLoupe();
   }
   function syncZoomLayer() {
@@ -620,7 +649,7 @@ watch(document);
     const nx = (b.w / 2 + (lx - b.x - b.w / 2) / view.z) / b.w;
     const ny = (b.h / 2 + (ly - b.y - b.h / 2) / view.z) / b.h;
     if (nx < .02 || nx > .98 || ny < .06 || ny > .94) return;
-    lTarget = { x: b.x + b.w * (dir === 'next' ? .12 : .86), y: b.y + b.h * .80 };
+    lTarget = { x: b.x + b.w * (dir === 'next' ? .06 : .945), y: b.y + b.h * .88 };
     kick();
   }
   function loupeEase() {
@@ -667,29 +696,45 @@ watch(document);
   zIn.onclick  = () => { setView(view.trx, view.try_, view.tz * 1.16); hideHint(); };
   zOut.onclick = () => { setView(view.trx, view.try_, view.tz / 1.16); hideHint(); };
 
-  /* ── indeks plat ── */
-  const plateList = $('#sbIndex');
-  PAGES.forEach((p, i) => {
-    const li = el('li');
-    const b = el('button', 'sbplate');
-    b.type = 'button';
-    b.innerHTML = `<span class="n">${String(i + 1).padStart(2, '0')}</span><span class="t"></span><span class="p"></span>`;
-    $('.t', b).textContent = p.title;
-    $('.p', b).textContent = p.place;
-    b.onclick = () => { goTo(i); wrap.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
-    li.appendChild(b); plateList.appendChild(li);
-  });
+  /* ── daftar isi, dikelompokkan per negara ── */
+  const idxBox = $('#sbIndex');
+  (() => {
+    const groups = [];
+    PAGES.forEach((p, i) => {
+      const last = groups[groups.length - 1];
+      if (last && last.neg === p.title) last.items.push({ p, i });
+      else groups.push({ neg: p.title, no: p.no, items: [{ p, i }] });
+    });
+    groups.forEach(g => {
+      const box = el('div', 'sb-group');
+      box.innerHTML = `<div class="sb-group__h">
+          <span class="sb-group__no">${g.no || '—'}</span>
+          <span class="sb-group__t"></span>
+          <span class="sb-group__b">${g.items.length} halaman</span>
+        </div><div class="sb-group__row"></div>`;
+      $('.sb-group__t', box).textContent = g.neg;
+      const row = $('.sb-group__row', box);
+      g.items.forEach(({ p, i }) => {
+        const b = el('button', 'sb-jump');
+        b.type = 'button'; b.textContent = p.place; b.dataset.i = String(i);
+        b.onclick = () => { goTo(i); wrap.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
+        row.appendChild(b);
+      });
+      idxBox.appendChild(box);
+    });
+  })();
   function marks() {
     const cur = turn ? turn.to : idx;
-    $$('.sbplate', plateList).forEach((b, i) => b.setAttribute('aria-current', i === cur ? 'true' : 'false'));
+    $$('.sb-jump', idxBox).forEach(b =>
+      b.setAttribute('aria-current', +b.dataset.i === cur ? 'true' : 'false'));
   }
 
   /* ── boot ── */
   paint(); applyView(); syncZoom();
-  Promise.all(PAGES.map(p => {
-    const im = new Image(); im.src = p.url;
-    return im.decode ? im.decode().catch(() => {}) : new Promise(r => { im.onload = im.onerror = r; });
-  })).then(() => { layout(); restLoupe(); paint(); });
+  const first = new Image();
+  first.src = PAGES[0].url;
+  (first.decode ? first.decode().catch(() => {}) : Promise.resolve())
+    .then(() => { layout(); restLoupe(); paint(); });
 })();
 
 })();
