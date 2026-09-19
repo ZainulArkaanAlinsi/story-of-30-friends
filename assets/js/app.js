@@ -329,9 +329,10 @@ watch(document);
   const loupeBtn = $('#loupeBtn'), zIn = $('#zIn'), zOut = $('#zOut');
   const ribbon = $('#sbRibbon'), sbPos = $('#sbPos'), sbTot = $('#sbTot'), sbFill = $('#sbFill');
 
+  const BOOK_ASSET_VERSION = '20260920-2';
   const PAGES = BOOK
     .filter(b => b.kind === 'title' || b.kind === 'open' || b.kind === 'end')
-    .map(b => ({ url: `/assets/book/${b.id}.webp`, title: b.neg,
+    .map(b => ({ url: `/assets/book/${b.id}.webp?v=${BOOK_ASSET_VERSION}`, title: b.neg,
                  place: b.kind === 'open' ? 'Passport Profile' : b.judul,
                  kind: b.kind, no: b.no }));
   const M = PAGES.length;
