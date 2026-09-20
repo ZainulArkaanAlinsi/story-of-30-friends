@@ -15,8 +15,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <link rel="preload" as="image" href="/assets/img/cover.webp" />
-<link rel="stylesheet" href="/assets/css/style.css?v=20260920-3" />
+<link rel="stylesheet" href="/assets/css/style.css?v=20260920-4" />
 <link rel="stylesheet" href="/assets/css/sketchbook.css?v=20260920-2" />
+<script>try{const t=localStorage.getItem('story30-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
 
@@ -50,6 +51,9 @@
     <a href="#catatan">Catatan</a>
     <a href="#buku" class="nav__cta">Dapatkan Buku</a>
   </nav>
+  <button class="nav__theme" id="themeToggle" type="button" aria-label="Ubah ke mode terang" title="Ubah tampilan">
+    <span class="theme-sun" aria-hidden="true">☼</span><span class="theme-moon" aria-hidden="true">◐</span>
+  </button>
   <button class="nav__burger" id="burger" aria-label="Buka menu" aria-expanded="false"><i></i><i></i><i></i></button>
 </header>
 
@@ -65,23 +69,25 @@
   <div class="hero__grid">
     <div class="hero__copy">
       <p class="eyebrow reveal" data-d="0">
-        <span class="eyebrow__line"></span>Catatan Perjalanan · 2026
+        <span class="eyebrow__line"></span>Field notes · Volume 01
       </p>
 
       <h1 class="hero__title">
-        <span class="w" style="--i:0">The</span>
-        <span class="w" style="--i:1">Story</span>
-        <span class="w" style="--i:2">of</span>
-        <span class="w hero__num" style="--i:3">30</span>
-        <span class="w" style="--i:4">Friends</span>
+        <span class="w" style="--i:0">The Story</span><br />
+        <span class="w" style="--i:1">of</span>
+        <span class="w hero__num" style="--i:2">30</span><br />
+        <span class="w" style="--i:3">Friends</span>
       </h1>
 
-      <p class="hero__sub reveal" data-d="200">
-        Menjelajah <b>20 negara</b> dalam <b>satu tahun</b>. Tiga benua, ratusan stasiun,
-        dan tiga puluh orang yang berangkat sebagai orang asing lalu pulang sebagai keluarga.
+      <p class="hero__sub reveal" data-d="180">
+        Tiga puluh orang berangkat dari Bogor, melintasi <b>20 negara</b>, lalu membawa pulang cerita yang tidak bisa diringkas oleh satu peta.
       </p>
 
-      <div class="hero__actions reveal" data-d="320">
+      <div class="hero__route-card reveal" data-d="250">
+        <span>Berangkat</span><b>Juli 2025</b><i aria-hidden="true"></i><strong>Bogor <em>→</em> 20 negara <em>→</em> pulang</strong>
+      </div>
+
+      <div class="hero__actions reveal" data-d="330">
         <a href="#buku" class="btn btn--solid" data-magnet>
           <span>Dapatkan Bukunya</span>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -89,7 +95,7 @@
         <a href="#prolog" class="btn btn--ghost" data-magnet>Baca Cuplikannya</a>
       </div>
 
-      <dl class="hero__facts reveal" data-d="440">
+      <dl class="hero__facts reveal" data-d="450">
         <div><dt>20</dt><dd>Negara</dd></div>
         <div><dt>30</dt><dd>Sahabat</dd></div>
         <div><dt>3</dt><dd>Benua</dd></div>
@@ -97,7 +103,8 @@
       </dl>
     </div>
 
-    <div class="hero__book reveal" data-d="140">
+    <div class="hero__book reveal" data-d="120">
+      <p class="hero__edition">A travel record<br /><span>2025—2026</span></p>
       <div class="book" id="book">
         <div class="book__shadow"></div>
         <div class="book__body">
@@ -105,9 +112,8 @@
           <img src="/assets/img/cover.webp" alt="Sampul buku The Story of 30 Friends karya Zainul Arkaan Al Insi" class="book__face" width="900" height="1350" />
           <div class="book__gloss"></div>
         </div>
-        <div class="stamp stamp--a">DEPARTED<br /><b>JULI 2025</b></div>
-        <div class="stamp stamp--b">20<br /><b>COUNTRIES</b></div>
       </div>
+      <p class="hero__book-caption"><span>01</span> Sebuah tahun yang mengubah cara kami pulang.</p>
     </div>
   </div>
 
@@ -357,6 +363,6 @@
 </div>
 
 <script src="/assets/js/data.js?v=20260920-2"></script>
-<script src="/assets/js/app.js?v=20260920-2"></script>
+<script src="/assets/js/app.js?v=20260920-4"></script>
 </body>
 </html>

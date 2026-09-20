@@ -42,6 +42,24 @@ const el = (t, c) => { const e = document.createElement(t); if (c) e.className =
 })();
 
 /* ── REVEAL ──────────────────────────────────────────── */
+/* Theme toggle */
+(() => {
+  const toggle = $('#themeToggle');
+  const root = document.documentElement;
+  const meta = $('meta[name="theme-color"]');
+  const applyTheme = (theme) => {
+    root.dataset.theme = theme;
+    if (toggle) toggle.setAttribute('aria-label', theme === 'dark' ? 'Ubah ke mode terang' : 'Ubah ke mode gelap');
+    if (meta) meta.content = theme === 'dark' ? '#16252b' : '#eef2ef';
+  };
+  applyTheme(root.dataset.theme || 'dark');
+  toggle?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+    applyTheme(next);
+    try { localStorage.setItem('story30-theme', next); } catch (_) {}
+  });
+})();
+
 const io = new IntersectionObserver((es) => {
   es.forEach(e => {
     if (!e.isIntersecting) return;
